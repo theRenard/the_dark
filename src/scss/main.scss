@@ -1,0 +1,14 @@
+html, body {
+  background-color: rgba(215, 35, 42, 1.0);
+  position: relative;
+}
+body, html {
+  padding: 0;
+  margin: 0;
+  background-color: black;
+}
+#phaser {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
