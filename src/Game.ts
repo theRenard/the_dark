@@ -1,11 +1,9 @@
-import {
-  Scene
-} from 'phaser';
-import debug from './debug';
+import { Scene } from 'phaser';
+import AnimatedTiles from './plugins/AnimatedTiles';
 
 export default class Game extends Scene {
-  private scoreText!: Phaser.GameObjects.DynamicBitmapText;
-  private fpsText!: Phaser.GameObjects.Text;
+
+  animatedTiles!: any;
   constructor() {
     super({
       key: 'game',
@@ -13,16 +11,32 @@ export default class Game extends Scene {
     });
   }
 
+  preload(): void {
+    this.load.scenePlugin('AnimatedTiles', AnimatedTiles, 'animatedTiles', 'animatedTiles');
+  }
+
+
   create(): void {
-    if (debug) {
-      this.fpsText = this.add.text(10, 550, 'FPS: -- \n-- Particles', {
-        font: 'bold 26px Arial',
-      });
-    }
+    const map = this.make.tilemap({ key: 'intro_tilemap' });
+    const city_tileset = map.addTilesetImage('city', 'city_tileset');
+    const cave_tileset = map.addTilesetImage('cave', 'cave_tileset');
+    map.createLayer('background', city_tileset);
+    map.createLayer('skyline', city_tileset).alpha = 0.4;
+    map.createLayer('far skyline', city_tileset).alpha = 0.4;
+    map.createLayer('terrain', [cave_tileset, city_tileset]);
+    map.createLayer('fences', city_tileset);
+    map.createLayer('buildings/buildings', city_tileset);
+    map.createLayer('buildings/buildings deco', city_tileset);
+    map.createLayer('trees', city_tileset);
+    map.createLayer('electric lines', city_tileset);
+    map.createLayer('animations', city_tileset);
+
+    this.animatedTiles.init(map);
+
   }
 
 
   update (time, delta): void {
-    if (debug) this.fpsText.setText('FPS: ' + (1000/delta).toFixed(3) + '\n');
+    // if (debug) this.fpsText.setText('FPS: ' + (1000/delta).toFixed(3) + '\n');
   }
 }
