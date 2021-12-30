@@ -4,6 +4,7 @@ import AnimatedTiles from './plugins/AnimatedTiles';
 export default class Game extends Scene {
 
   animatedTiles!: any;
+  drone: any;
   constructor() {
     super({
       key: 'game',
@@ -23,7 +24,8 @@ export default class Game extends Scene {
     map.createLayer('background', city_tileset);
     map.createLayer('skyline', city_tileset).alpha = 0.4;
     map.createLayer('far skyline', city_tileset).alpha = 0.4;
-    map.createLayer('terrain', [cave_tileset, city_tileset]);
+    const terrain = map.createLayer('terrain', [cave_tileset, city_tileset]);
+    terrain.setCollisionByProperty({ collides: true });
     map.createLayer('fences', city_tileset);
     map.createLayer('buildings/buildings', city_tileset);
     map.createLayer('buildings/buildings deco', city_tileset);
@@ -33,10 +35,20 @@ export default class Game extends Scene {
 
     this.animatedTiles.init(map);
 
+    this.anims.create({
+      key: 'idle',
+      frames: this.anims.generateFrameNumbers('bomb_droid_idle', { start: 0, end: 3 }),
+      frameRate: 10,
+      repeat: -1
+  });
+
+    this.drone = this.physics.add.sprite(100, 100, 'bomb_droid_idle');
+
   }
 
 
   update (time, delta): void {
+    this.drone.anims.play('idle', true);
     // if (debug) this.fpsText.setText('FPS: ' + (1000/delta).toFixed(3) + '\n');
   }
 }
