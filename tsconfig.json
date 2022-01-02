@@ -1,33 +1,29 @@
 {
-	"compilerOptions": {
-		"target": "es2016",
-		"module": "es6",
-		"strict": true,
-		"noImplicitAny": false,
-		"noEmit": true,
-		"allowJs": true,
-		"jsx": "preserve",
-		"importHelpers": true,
-		"moduleResolution": "node",
-		"experimentalDecorators": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"resolveJsonModule": true,
-		"sourceMap": true,
-		"baseUrl": "./src",
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "moduleResolution": "Node",
+    "strict": true,
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
 		"paths": {
-		  "~/*": ["./*"]
+		  "./*": ["./*"]
 		},
-		"typeRoots": [
-			"node_modules/@types",
-			"node_module/phaser/types",
-			"src/types",
-		],
-		"types": [
-			"phaser",
-		]
-	},
-	"include": [
-		"src/**/*"
-	]
+  },
+	"typeRoots": [
+		"node_modules/@types",
+		"node_module/phaser/types",
+		"src/types",
+	],
+	"types": [
+		"phaser",
+	],
+  "include": ["./src"]
 }

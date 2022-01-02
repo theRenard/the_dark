@@ -1,4 +1,4 @@
-import Game from "~/Game";
+import Game from "../../Game";
 
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 

@@ -1,11 +1,9 @@
 import Phaser from 'phaser';
-import debug from '~/debug';
-import Preloader from '~/Preloader';
-import Game from '~/Game';
-import CONSTS from '~/configs/constants.json';
-
-import '/scss/main.scss';
-
+import debug from './debug';
+import Preloader from './Preloader';
+import Game from './Game';
+import CONSTS from './configs/constants.json';
+import './style.css'
 type extraConfig = {
 	pixelArt: boolean
 }

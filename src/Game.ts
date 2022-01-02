@@ -1,7 +1,7 @@
 import { Scene } from 'phaser';
 import AnimatedTiles from './plugins/AnimatedTiles';
-import Drone from '~/sprites/enemies/Drone';
-import Player from '~/sprites/player/Player';
+import Drone from './sprites/enemies/Drone';
+import Player from './sprites/player/Player';
 export default class Game extends Scene {
 
   animatedTiles!: any;

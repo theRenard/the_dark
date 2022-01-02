@@ -4,8 +4,9 @@
   "description": "Boilerplate with just TS and nothing else",
   "main": "src/index.html",
   "scripts": {
-    "start": "parcel src/index.html -p 9000 --open",
-    "build": "parcel build src/index.html --out-dir dist --public-url './'"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "repository": {
     "type": "git",
@@ -21,19 +22,9 @@
     "@typescript-eslint/eslint-plugin": "^5.8.1",
     "@typescript-eslint/parser": "^5.8.1",
     "eslint": "^8.5.0",
-    "minimist": ">=1.2.2",
-    "parcel-bundler": "^1.12.5",
-    "parcel-plugin-clean-easy": "^1.0.2",
-    "parcel-plugin-static-files-copy": "^2.6.0",
     "sass": "^1.32.6",
-    "typescript": "^4.5.4"
-  },
-  "parcelCleanPaths": [
-    "dist"
-  ],
-  "staticFiles": {
-    "staticPath": "public",
-    "watcherGlob": "**"
+    "typescript": "^4.5.4",
+    "vite": "^2.7.2"
   },
   "dependencies": {
     "phaser": "^3.55.2"
