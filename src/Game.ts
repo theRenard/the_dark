@@ -1,7 +1,8 @@
 import { Scene } from 'phaser';
 import AnimatedTiles from './plugins/AnimatedTiles';
-import Drone from './sprites/enemies/Drone';
-import Player from './sprites/player/Player';
+import Drone from './objects/enemies/Drone';
+import Player from './objects/player/Player';
+import Electricity from './objects/particles/Electricity';
 export default class Game extends Scene {
 
   animatedTiles!: any;
@@ -31,17 +32,21 @@ export default class Game extends Scene {
     map.createLayer('far skyline', city_tileset).alpha = 0.4;
     const terrain = map.createLayer('terrain', [cave_tileset, city_tileset]);
     terrain.setCollisionByProperty({ collides: true });
-    const player = new Player(this, 350, 350);
-    const drone = new Drone(this);
-    // this.physics.world.collide(player, terrain);
-    this.physics.add.collider(player, terrain);
-    this.physics.add.collider(drone, terrain);
+
     map.createLayer('fences', city_tileset);
     map.createLayer('buildings/buildings', city_tileset);
     map.createLayer('buildings/buildings deco', city_tileset);
     map.createLayer('trees', city_tileset);
     map.createLayer('electric lines', city_tileset);
     map.createLayer('animations', city_tileset);
+
+    const player = new Player(this, 350, 350);
+    const drone = new Drone(this);
+    new Drone(this);
+    new Electricity(this);
+    // this.physics.world.collide(player, terrain);
+    this.physics.add.collider(player, terrain);
+    this.physics.add.collider(drone, terrain);
 
     this.animatedTiles.init(map);
 

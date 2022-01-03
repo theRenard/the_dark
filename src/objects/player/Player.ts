@@ -1,6 +1,7 @@
-import Game from "./Game";
+import Game from "../../Game";
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
+  walkSpeed = 100;
   private cursor!: Phaser.Types.Input.Keyboard.CursorKeys;
   private joyStickKeys!: Phaser.Types.Input.Keyboard.CursorKeys;
 
@@ -8,12 +9,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     [key: string]: Phaser.Input.Keyboard.Key;
   }
   constructor(scene: Game, x: number, y: number) {
-    super(scene, x, y, 'player_hidle');
+    super(scene, x, y, 'player_idle');
     this.scene = scene;
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.setCollideWorldBounds(true);
     this.setImmovable(true);
+    this.setOrigin(0.40, 0.5);
 
     this.cursor = scene.input.keyboard.createCursorKeys();
     // this.joyStickKeys = this.joyStick.createCursorKeys();
@@ -35,20 +37,22 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  private hidle() {
+  private idle() {
     this.setVelocity(0, 0);
-    this.anims.play('player_hidle', true);
+    this.anims.play('player_idle', true);
   }
 
   private moveRight() {
+    this.setOrigin(0.40, 0.5);
     this.setFlipX(false);
-    this.setVelocityX(150);
+    this.setVelocityX(this.walkSpeed);
     this.anims.play('player_walk', true);
   }
 
   private moveLeft() {
+    this.setOrigin(0.60, 0.5);
     this.setFlipX(true);
-    this.setVelocityX(-150);
+    this.setVelocityX(-this.walkSpeed);
     this.anims.play('player_walk', true);
   }
 
@@ -67,7 +71,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     else if (left) {
       this.moveLeft();
     } else {
-      this.hidle()
+      this.idle()
     }
 
   }

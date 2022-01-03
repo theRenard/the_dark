@@ -27,6 +27,7 @@
     "vite": "^2.7.2"
   },
   "dependencies": {
+    "gsap": "^3.9.1",
     "phaser": "^3.55.2"
   }
 }
