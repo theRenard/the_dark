@@ -3,6 +3,8 @@ import AnimatedTiles from './plugins/AnimatedTiles';
 import Drone from './objects/enemies/Drone';
 import Player from './objects/player/Player';
 import Electricity from './objects/particles/Electricity';
+import Rain from './objects/particles/Rain';
+import Splash from './objects/particles/Splash';
 export default class Game extends Scene {
 
   animatedTiles!: any;
@@ -22,14 +24,15 @@ export default class Game extends Scene {
 
   create(): void {
 
-
-
     const map = this.make.tilemap({ key: 'intro_tilemap' });
     const city_tileset = map.addTilesetImage('city', 'city_tileset');
     const cave_tileset = map.addTilesetImage('cave', 'cave_tileset');
     map.createLayer('background', city_tileset);
     map.createLayer('skyline', city_tileset).alpha = 0.4;
     map.createLayer('far skyline', city_tileset).alpha = 0.4;
+    new Rain(this);
+    new Splash(this, 50, 0, 800, 480 - (32 * 3));
+    new Splash(this, 10, 670, 770, 480 - (32 * 6));
     const terrain = map.createLayer('terrain', [cave_tileset, city_tileset]);
     terrain.setCollisionByProperty({ collides: true });
 
@@ -40,12 +43,26 @@ export default class Game extends Scene {
     map.createLayer('electric lines', city_tileset);
     map.createLayer('animations', city_tileset);
 
-    const player = new Player(this, 350, 350);
+    const objectsLayer = map.getObjectLayer('objects');
+    objectsLayer.objects.forEach(object => {
+      const { x, y, width = 16 } = object;
+      if (object.name === 'player' && x && y) {
+        this.player = new Player(this, x + (width * 0.5), y);
+      }
+      if (object.name === 'sparkle' && x && y) {
+        new Electricity(this, x + (width * 0.5), y);
+      }
+      if (object.name === 'sparkle_two' && x && y) {
+        new Electricity(this, x + (width * 0.5), y);
+      }
+    });
+
+
+
     const drone = new Drone(this);
     new Drone(this);
-    new Electricity(this);
     // this.physics.world.collide(player, terrain);
-    this.physics.add.collider(player, terrain);
+    this.physics.add.collider(this.player, terrain);
     this.physics.add.collider(drone, terrain);
 
     this.animatedTiles.init(map);

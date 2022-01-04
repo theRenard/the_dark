@@ -96,7 +96,7 @@ export default class Preload extends Scene {
 
 
     const handler = () => this.scene.start('game');
-    setTimeout(handler, 1000);
+    setTimeout(handler, 100);
   }
 
 }

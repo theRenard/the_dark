@@ -34,7 +34,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       a: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
       s: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
       d: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
+      left: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT),
+      right: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT),
+      down: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN),
+      up: scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP),
     }
+
+    // this.scene.cameras.main.startFollow(this);
   }
 
   private idle() {
@@ -60,9 +66,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     super.preUpdate(time, delta);
 
     // const up = this.keys.w?.isDown;
-    const right = this.keys.d?.isDown;
+    const right = this.keys.d?.isDown || this.keys.right?.isDown;
     // const down = this.keys.s?.isDown;
-    const left = this.keys.a?.isDown;
+    const left = this.keys.a?.isDown || this.keys.left?.isDown;
 
 
     if (right) {

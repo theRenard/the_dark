@@ -1,15 +1,15 @@
 export default class Electricity {
   electricity: Phaser.GameObjects.Particles.ParticleEmitter;
   scene: Phaser.Scene;
-  timer: Phaser.Time.TimerEvent;
+  timer!: Phaser.Time.TimerEvent;
   paused = false;
   emitter: Phaser.GameObjects.Particles.ParticleEmitterManager;
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: Phaser.Scene, x: number, y: number) {
     this.scene = scene;
     this.emitter = scene.add.particles('spark');
     this.electricity = this.emitter.createEmitter({
-      x: 400,
-      y: 300,
+      x,
+      y,
       lifespan: {
         min: 500,
         max: 1500,
@@ -33,11 +33,15 @@ export default class Electricity {
       scale: { start: 1, end: 0 },
       blendMode: 'ADD',
     });
-    this.timer = scene.time.addEvent({
-      delay: Phaser.Math.Between(3, 5) * 1000,
+    this.sparkle();
+  }
+
+  sparkle() {
+    this.timer = this.scene.time.addEvent({
+      delay: Phaser.Math.Between(1, 3) * 1000,
       callback: this.togglePause,
       callbackScope: this,
-      loop: true,
+      loop: false,
     });
   }
 
@@ -49,6 +53,7 @@ export default class Electricity {
       this.electricity.setFrequency(50);
       this.electricity.setQuantity(1);
     }
+    this.sparkle();
   }
 
 }

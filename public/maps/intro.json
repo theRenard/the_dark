@@ -10,7 +10,7 @@
          "name":"background",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":50,
          "x":0,
          "y":0
@@ -22,7 +22,7 @@
          "name":"far skyline",
          "opacity":0.3,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":50,
          "x":0,
          "y":0
@@ -34,7 +34,7 @@
          "name":"skyline",
          "opacity":0.3,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":50,
          "x":0,
          "y":0
@@ -58,7 +58,7 @@
          "name":"fences",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":50,
          "x":0,
          "y":0
@@ -93,7 +93,7 @@
          "name":"buildings",
          "opacity":1,
          "type":"group",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -104,7 +104,7 @@
          "name":"trees",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":50,
          "x":0,
          "y":0
@@ -116,7 +116,7 @@
          "name":"electric lines",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":50,
          "x":0,
          "y":0
@@ -128,13 +128,80 @@
          "name":"animations",
          "opacity":1,
          "type":"tilelayer",
-         "visible":false,
+         "visible":true,
          "width":50,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":15,
+         "name":"objects",
+         "objects":[
+                {
+                 "height":6.6453130606983,
+                 "id":3,
+                 "name":"sparkle",
+                 "properties":[
+                        {
+                         "name":"sparkle",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":6.6453130606983,
+                 "x":399.117502425539,
+                 "y":312.196807591606
+                }, 
+                {
+                 "height":6.56398357477599,
+                 "id":4,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":false,
+                 "width":4.88482498587985,
+                 "x":766.459570440703,
+                 "y":305.148910836679
+                }, 
+                {
+                 "height":1.22084455430803,
+                 "id":5,
+                 "name":"sparkle_two",
+                 "properties":[
+                        {
+                         "name":"sparkle",
+                         "type":"bool",
+                         "value":false
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":1.18974960486764,
+                 "x":769.079983791161,
+                 "y":295.751854991591
+                }, 
+                {
+                 "height":16,
+                 "id":7,
+                 "name":"player",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":32,
+                 "y":370
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
         }],
- "nextlayerid":15,
- "nextobjectid":1,
+ "nextlayerid":16,
+ "nextobjectid":8,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",
