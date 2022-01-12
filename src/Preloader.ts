@@ -1,5 +1,5 @@
 import { Scene } from 'phaser';
-
+import Buildings from './objects/others/Buildings';
 export default class Preload extends Scene {
 
   constructor() {
@@ -13,6 +13,8 @@ export default class Preload extends Scene {
 
     this.add.text(this.scale.width / 2, this.scale.height / 2, 'Loading Images' ).setOrigin(0.5);
     // Tilesets
+    this.load.image('fog', 'assets/fog.png');
+    this.load.image('background', 'assets/background.png');
     this.load.image('city_tileset', 'assets/city_tileset.png');
     this.load.image('cave_tileset', 'assets/cave_tileset.png');
     this.load.image('spark', 'assets/spark.png');
@@ -31,6 +33,12 @@ export default class Preload extends Scene {
     this.load.spritesheet('player_sweep', 'assets/characters/player/sweep.png', {  frameWidth: 88, frameHeight: 30 });
     this.load.spritesheet('player_wake', 'assets/characters/player/wake.png', {  frameWidth: 88, frameHeight: 30 });
 
+
+    // create the buildings
+    const { near, middle, far } = new Buildings(this).textures;
+    near.generateTexture('buildings_near', this.scale.width, this.scale.height);
+    middle.generateTexture('buildings_middle');
+    far.generateTexture('buildings_far');
   }
 
 

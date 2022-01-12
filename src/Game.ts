@@ -10,6 +10,10 @@ export default class Game extends Scene {
   animatedTiles!: any;
   drone: any;
   player: any;
+  myCam!: Phaser.Cameras.Scene2D.Camera;
+  nearBuildings: Phaser.GameObjects.Image;
+  middleBuildings: Phaser.GameObjects.Image;
+  farBuildings: Phaser.GameObjects.Image;
   constructor() {
     super({
       key: 'game',
@@ -23,6 +27,12 @@ export default class Game extends Scene {
 
 
   create(): void {
+
+    this.farBuildings = this.add.image(0, 0, 'buildings_far').setOrigin(0, 0).setScrollFactor(0);
+    this.middleBuildings = this.add.image(0, 0, 'buildings_middle').setOrigin(0, 0).setScrollFactor(0);
+    this.nearBuildings = this.add.image(0, 0, 'buildings_near').setOrigin(0, 0).setScrollFactor(0);
+
+    console.log(this.nearBuildings);
 
     const map = this.make.tilemap({ key: 'intro_tilemap' });
     const city_tileset = map.addTilesetImage('city', 'city_tileset');
@@ -57,20 +67,28 @@ export default class Game extends Scene {
       }
     });
 
-
-
     const drone = new Drone(this);
     new Drone(this);
-    // this.physics.world.collide(player, terrain);
+    this.physics.world.collide(this.player, terrain);
     this.physics.add.collider(this.player, terrain);
     this.physics.add.collider(drone, terrain);
 
     this.animatedTiles.init(map);
+
+    this.myCam = this.cameras.main;
+    this.myCam.setBounds(0, 0, this.scale.width * 3, this.scale.height);
+
+    // making the camera follow the player
+    this.myCam.startFollow(this.player);
 
   }
 
 
   update (time, delta): void {
     // if (debug) this.fpsText.setText('FPS: ' + (1000/delta).toFixed(3) + '\n');
+    // this.nearBuildings.x = this.myCam.scrollX * .03;
+    // this.middleBuildings.x = this.myCam.scrollX * .06;
+    // this.farBuildings.x = this.myCam.scrollX * .09;
+
   }
 }
