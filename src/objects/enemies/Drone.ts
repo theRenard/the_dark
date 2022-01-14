@@ -6,7 +6,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
   constructor(scene: Game) {
     const x = Phaser.Math.Between(0, scene.scale.width);
     const y = Phaser.Math.Between(0, scene.scale.height - 150);
-    super(scene, x, y, 'bomb_droid');
+    super(scene, x, y, 'bomb_droid_.bomb_droid');
     this.scene = scene;
     scene.add.existing(this);
     scene.physics.add.existing(this);
