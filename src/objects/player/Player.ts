@@ -24,28 +24,35 @@ export default class Player {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private stateMachine: StateMachine
 
+  container: Phaser.GameObjects.Container;
+
   private keys!: {
     [key: string]: Phaser.Input.Keyboard.Key;
   }
   scene: Game;
-  sprite: Phaser.Physics.Arcade.Sprite;
+  sprite: Phaser.GameObjects.Sprite;
   body: any;
   right!: boolean;
   left!: boolean;
   A_button!: boolean;
+  physicsObject: Phaser.GameObjects.Rectangle;
   constructor(scene: Game, x: number, y: number) {
     this.scene = scene;
-
 		this.createAnimations();
-		this.stateMachine = new StateMachine(this, 'player')
 
-    this.sprite = this.scene.physics.add.sprite(x, y, 'king');
-    this.scene.add.existing(this.sprite);
-    this.scene.physics.add.existing(this.sprite);
-    this.sprite.setCollideWorldBounds(true);
-    this.sprite.setImmovable(true);
-    this.sprite.setOrigin(1, 1);
-    this.sprite.setBodySize(30, 79);
+    this.stateMachine = new StateMachine(this, 'player');
+
+    this.sprite = this.scene.add.sprite(32, -23, 'king');
+
+    this.physicsObject = this.scene.add.rectangle(0, 0, 32, 32);
+    this.scene.physics.add.existing(this.physicsObject);
+
+    this.container = scene.add.container(x + 100, y - 100, [this.sprite, this.physicsObject]);
+    this.container.setSize(32, 32);
+    this.scene.physics.add.existing(this.container);
+
+    // this.scene.physics.world.enable(this.container);
+    // this.physicsBody.setCollideWorldBounds(true);
 
 		this.stateMachine.addState('idle', {
 			onEnter: this.idleOnEnter,
@@ -88,9 +95,23 @@ export default class Player {
 
   }
 
+  get physicsBody() {
+    return this.container.body as Phaser.Physics.Arcade.Body;
+  }
+
+  private faceRight() {
+    this.sprite.setX(32);
+    this.sprite.flipX = false
+  }
+
+  private faceLeft() {
+    this.sprite.setX(-32);
+    this.sprite.flipX = true
+  }
+
 	private idleOnEnter() {
     this.sprite.play({ key: 'idle', repeat: -1 }, true);
-    this.sprite.setVelocity(0, 0);
+    this.physicsBody.setVelocityX(0);
 	}
 
 	private idleOnUpdate() {
@@ -106,13 +127,13 @@ export default class Player {
 		const speed = 100
 
 		if (this.left) {
-			this.sprite.flipX = true
-			this.sprite.setVelocityX(-speed)
+      this.faceLeft()
+			this.physicsBody.setVelocityX(-speed)
 		} else if (this.right) {
-			this.sprite.flipX = false
-			this.sprite.setVelocityX(speed)
+      this.faceRight()
+			this.physicsBody.setVelocityX(speed)
 		} else {
-			this.sprite.setVelocityX(0)
+			this.physicsBody.setVelocityX(0)
 			this.stateMachine.setState('idle')
 		}
 
@@ -130,15 +151,15 @@ export default class Player {
 	}
 
 	private jumpOnUpdate() {
-    this.sprite.setVelocityY(-120)
+    this.physicsBody.setVelocityY(-120)
     const speed = 100
 
 		if (this.left) {
-			this.sprite.flipX = true
-			this.sprite.setVelocityX(-speed)
+      this.faceLeft();
+			this.physicsBody.setVelocityX(-speed)
 		} else if (this.right) {
-			this.sprite.flipX = false
-			this.sprite.setVelocityX(speed)
+      this.faceRight();
+			this.physicsBody.setVelocityX(speed)
 		} else {
       this.stateMachine.setState('idle')
     }

@@ -11,24 +11,27 @@ export default class Preload extends Scene {
 
   preload() {
 
-    this.add.text(this.scale.width / 2, this.scale.height / 2, 'Loading Images' ).setOrigin(0.5);
+    // fonts
+    this.load.bitmapFont('vermin', 'assets/fonts/vermin.png', 'assets/fonts/vermin.xml');
+
+    // this.add.text(this.scale.width / 2, this.scale.height / 2, 'Loading Images' ).setOrigin(0.5);
     // Tilesets
-    this.load.image('fog', 'assets/fog.png');
-    this.load.image('background', 'assets/background.png');
-    this.load.image('city_tileset', 'assets/city_tileset.png');
-    this.load.image('cave_tileset', 'assets/cave_tileset.png');
-    this.load.image('spark', 'assets/spark.png');
-    this.load.image('flower_glow', 'assets/flower_glow.png');
-    this.load.tilemapTiledJSON('intro_tilemap', 'maps/intro.json');
+    this.load.image('fog', 'assets/images/fog.png');
+    this.load.image('background', 'assets/images/background.png');
+    this.load.image('city_tileset', 'assets/images/city_tileset.png');
+    this.load.image('cave_tileset', 'assets/images/cave_tileset.png');
+    this.load.image('spark', 'assets/images/spark.png');
+    this.load.image('flower_glow', 'assets/images/flower_glow.png');
+    this.load.tilemapTiledJSON('intro_tilemap', 'assets/maps/intro.json');
 
     // Aseprites
-    this.load.aseprite('bomb_droid', 'assets/characters/bomb_droid/bomb_droid.png', 'assets/characters/bomb_droid/bomb_droid.json');
-    // this.load.aseprite('assassin', 'assets/characters/assassin/assassin.png', 'assets/characters/assassin/assassin.json');
-    // this.load.aseprite('blaster', 'assets/characters/blaster/blaster.png', 'assets/characters/blaster/blaster.json');
-    // this.load.aseprite('dagger', 'assets/characters/dagger/dagger.png', 'assets/characters/dagger/dagger.json');
-    // this.load.aseprite('guardian', 'assets/characters/guardian/guardian.png', 'assets/characters/guardian/guardian.json');
-    this.load.aseprite('king', 'assets/characters/king/king.png', 'assets/characters/king/king.json');
-    // this.load.aseprite('slicer', 'assets/characters/slicer/slicer.png', 'assets/characters/slicer/slicer.json');
+    this.load.aseprite('bomb_droid', 'assets/images/characters/bomb_droid/bomb_droid.png', 'assets/images/characters/bomb_droid/bomb_droid.json');
+    // this.load.aseprite('assassin', 'assets/images/characters/assassin/assassin.png', 'assets/images/characters/assassin/assassin.json');
+    // this.load.aseprite('blaster', 'assets/images/characters/blaster/blaster.png', 'assets/images/characters/blaster/blaster.json');
+    // this.load.aseprite('dagger', 'assets/images/characters/dagger/dagger.png', 'assets/images/characters/dagger/dagger.json');
+    // this.load.aseprite('guardian', 'assets/images/characters/guardian/guardian.png', 'assets/images/characters/guardian/guardian.json');
+    this.load.aseprite('king', 'assets/images/characters/king/king.png', 'assets/images/characters/king/king.json');
+    // this.load.aseprite('slicer', 'assets/images/characters/slicer/slicer.png', 'assets/images/characters/slicer/slicer.json');
 
     // create the buildings
     const { near, middle, far } = new Buildings(this).textures;

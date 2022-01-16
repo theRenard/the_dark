@@ -66,8 +66,8 @@ export default class Game extends Scene {
 
     const drone = new Drone(this);
     new Drone(this);
-    this.physics.world.collide(this.player.sprite, terrain);
-    this.physics.add.collider(this.player.sprite, terrain);
+    this.physics.world.collide(this.player.container, terrain);
+    this.physics.add.collider(this.player.container, terrain);
     this.physics.add.collider(drone, terrain);
 
     this.animatedTiles.init(map);
@@ -77,6 +77,9 @@ export default class Game extends Scene {
 
     // making the camera follow the player
     // this.myCam.startFollow(this.player);
+
+    this.add.dynamicBitmapText(this.scale.width / 2, this.scale.height / 2, 'vermin', 'The_Dark', 60 ).setOrigin(0.5);
+
 
   }
 
