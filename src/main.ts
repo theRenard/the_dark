@@ -29,7 +29,7 @@ const config: Phaser.Types.Core.GameConfig & extraConfig = {
 		arcade: {
 			debug,
 			gravity: {
-				y: 5500
+				y: 300
 			},
 		}
 	},

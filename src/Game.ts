@@ -78,7 +78,7 @@ export default class Game extends Scene {
     // making the camera follow the player
     // this.myCam.startFollow(this.player);
 
-    this.add.dynamicBitmapText(this.scale.width / 2, this.scale.height / 2, 'vermin', 'The_Dark', 60 ).setOrigin(0.5);
+    // this.add.dynamicBitmapText(this.scale.width / 2, this.scale.height / 2, 'vermin', 'The_Dark', 60 ).setOrigin(0.5);
 
 
   }

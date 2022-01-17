@@ -52,7 +52,7 @@ export default class Player {
     this.scene.physics.add.existing(this.container);
 
     // this.scene.physics.world.enable(this.container);
-    // this.physicsBody.setCollideWorldBounds(true);
+    this.physicsBody.setCollideWorldBounds(true);
 
 		this.stateMachine.addState('idle', {
 			onEnter: this.idleOnEnter,
@@ -66,6 +66,10 @@ export default class Player {
     .addState('jump', {
 			onEnter: this.jumpOnEnter,
 			onUpdate: this.jumpOnUpdate
+		})
+    .addState('fall', {
+			onEnter: this.fallOnEnter,
+			onUpdate: this.fallOnUpdate
 		})
     .setState('idle')
 
@@ -151,7 +155,7 @@ export default class Player {
 	}
 
 	private jumpOnUpdate() {
-    this.physicsBody.setVelocityY(-120)
+    this.physicsBody.setVelocityY(-200)
     const speed = 100
 
 		if (this.left) {
@@ -160,10 +164,36 @@ export default class Player {
 		} else if (this.right) {
       this.faceRight();
 			this.physicsBody.setVelocityX(speed)
-		} else {
-      this.stateMachine.setState('idle')
+		}
+
+    if (!this.A_button) {
+			this.stateMachine.setState('fall')
+		}
+
+    // don't jump too high
+    if (this.physicsBody.y < 200) {
+      this.stateMachine.setState('fall')
     }
 	}
+
+  private fallOnEnter() {
+    this.sprite.play({ key: 'fall', repeat: -1 }, true);
+    this.physicsBody.setVelocityY(200)
+  }
+
+  private fallOnUpdate() {
+    if (this.left) {
+      this.faceLeft();
+    } else if (this.right) {
+      this.faceRight();
+    }
+
+    // when the player is on the ground
+    if (this.physicsBody.blocked.down) {
+      this.stateMachine.setState('idle');
+    }
+
+  }
 
   private createAnimations() {
     this.scene.anims.createFromAseprite('king');
