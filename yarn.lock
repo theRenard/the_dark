@@ -882,6 +882,11 @@ path@^0.12.7:
     process "^0.11.1"
     util "^0.10.3"
 
+phaser-plugin-inspector@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/phaser-plugin-inspector/-/phaser-plugin-inspector-1.5.0.tgz#03ede8d141f63a0683882704fc60401950efdcca"
+  integrity sha512-tpUeRV1T/cQ1rOm9148QOxhQLY6xmhceM6uRZdwhOIktRClBUFp4eNJU6T3ei30JE5oxOoxM/g3dAsDFaNQ8qg==
+
 phaser@^3.55.2:
   version "3.55.2"
   resolved "https://registry.yarnpkg.com/phaser/-/phaser-3.55.2.tgz#c1e2e9e70de7085502885e06f46b7eb4bd95e29a"
@@ -1065,6 +1070,11 @@ tsutils@^3.21.0:
   integrity sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==
   dependencies:
     tslib "^1.8.1"
+
+tweakpane@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/tweakpane/-/tweakpane-3.0.7.tgz#a514a08aa4fafb542923d83e4be6915887dac7e5"
+  integrity sha512-rgxqoo6T10atYoKHVif6aYlAMIAlHJ84hi5LXqi6ZgVEPcmnzPI34C88y6HquarBY0ZKE/ZCXVaZm8NibhQRtA==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"

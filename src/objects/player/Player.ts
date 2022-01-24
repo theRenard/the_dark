@@ -21,20 +21,17 @@ import StateMachine from '../../plugins/StateMachine';
 // blood teleport 2
 
 export default class Player {
-  private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private stateMachine: StateMachine
-
   container: Phaser.GameObjects.Container;
-
-  private keys!: {
-    [key: string]: Phaser.Input.Keyboard.Key;
-  }
   scene: Game;
   sprite: Phaser.GameObjects.Sprite;
   body: any;
   right!: boolean;
   left!: boolean;
-  A_button!: boolean;
+  JumpButton!: boolean;
+  AttackButton!: boolean;
+  AttackTwoButton!: boolean;
+  AttackThreeButton!: boolean;
   physicsObject: Phaser.GameObjects.Rectangle;
   constructor(scene: Game, x: number, y: number) {
     this.scene = scene;
@@ -67,34 +64,24 @@ export default class Player {
 			onEnter: this.jumpOnEnter,
 			onUpdate: this.jumpOnUpdate
 		})
+    .addState('attack', {
+			onEnter: this.attackOnEnter,
+			onExit: this.attackOnExit,
+		})
+    .addState('attackTwo', {
+			onEnter: this.attackTwoOnEnter,
+			onExit: this.attackTwoOnExit,
+		})
+    .addState('attackThree', {
+			onEnter: this.attackThreeOnEnter,
+			onExit: this.attackThreeOnExit,
+		})
     .addState('fall', {
 			onEnter: this.fallOnEnter,
 			onUpdate: this.fallOnUpdate
 		})
     .setState('idle')
 
-    this.cursors = this.scene.input.keyboard.createCursorKeys();
-    // this.joyStickKeys = this.joyStick.createCursorKeys();
-    this.keys = {
-      space: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE),
-      one: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE),
-      two: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO),
-      zero: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO),
-      z: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z),
-      m: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.M),
-      n: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.N),
-      l: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.L),
-      k: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.K),
-      j: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.J),
-      w: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
-      a: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
-      s: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-      d: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
-      left: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT),
-      right: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT),
-      down: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN),
-      up: this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP),
-    }
     // this.scene.cameras.main.startFollow(this);
 
   }
@@ -120,7 +107,10 @@ export default class Player {
 
 	private idleOnUpdate() {
 		if (this.left || this.right) this.stateMachine.setState('walk')
-		if (this.A_button) this.stateMachine.setState('jump')
+		if (this.JumpButton) this.stateMachine.setState('jump')
+    if (this.AttackButton) this.stateMachine.setState('attack')
+    if (this.AttackTwoButton) this.stateMachine.setState('attackTwo')
+    if (this.AttackThreeButton) this.stateMachine.setState('attackThree')
 	}
 
 	private walkOnEnter() {
@@ -141,12 +131,14 @@ export default class Player {
 			this.stateMachine.setState('idle')
 		}
 
-		if (this.A_button) {
-			this.stateMachine.setState('jump')
-		}
+		if (this.JumpButton) this.stateMachine.setState('jump')
+    if (this.AttackButton) this.stateMachine.setState('attack')
+    if (this.AttackTwoButton) this.stateMachine.setState('attackTwo')
+    if (this.AttackThreeButton) this.stateMachine.setState('attackThree')
 	}
 
 	private walkOnExit() {
+    this.physicsBody.setVelocityX(0);
 		this.sprite.stop()
 	}
 
@@ -166,7 +158,7 @@ export default class Player {
 			this.physicsBody.setVelocityX(speed)
 		}
 
-    if (!this.A_button) {
+    if (!this.JumpButton) {
 			this.stateMachine.setState('fall')
 		}
 
@@ -175,6 +167,48 @@ export default class Player {
       this.stateMachine.setState('fall')
     }
 	}
+
+  private attackOnEnter() {
+    this.sprite.play({
+      key: 'attack',
+      repeat: 0,
+
+     }, true).on('animationcomplete', () => {
+        this.stateMachine.setState('idle')
+      })
+  }
+
+  private attackOnExit() {
+    if (this.sprite.flipX) this.container.setX(this.container.x - 57)
+    else this.container.setX(this.container.x + 57)
+  }
+
+  private attackTwoOnEnter() {
+    this.sprite.play({
+      key: 'attack 1',
+      repeat: 0,
+
+     }, true).on('animationcomplete', () => {
+        this.stateMachine.setState('idle')
+      })
+  }
+
+  private attackTwoOnExit() {
+    if (this.sprite.flipX) this.container.setX(this.container.x - 45)
+    else this.container.setX(this.container.x + 45)
+  }
+  private attackThreeOnEnter() {
+    this.sprite.play({
+      key: 'attack 3',
+      repeat: 0,
+
+     }, true).on('animationcomplete', () => {
+        this.stateMachine.setState('idle')
+      })
+  }
+
+  private attackThreeOnExit() {
+  }
 
   private fallOnEnter() {
     this.sprite.play({ key: 'fall', repeat: -1 }, true);
@@ -202,12 +236,15 @@ export default class Player {
   private updateControls() {
       // const duration = 1000;
       // const up = this.cursors.up?.isDown || this.scene.input.gamepad?.pad1?.leftStick.y < 0 || this.keys.w?.isDown;
-      this.right = this.cursors.right?.isDown || this.scene.input.gamepad?.pad1?.leftStick.x > 0 || this.keys.d?.isDown;
+      this.right = this.scene.input.gamepad?.pad1?.leftStick.x > 0;
       // const down = this.cursors.down?.isDown || this.scene.input.gamepad?.pad1?.leftStick.y > 0 || this.keys.s?.isDown;
-      this.left = this.cursors.left?.isDown || this.scene.input.gamepad?.pad1?.leftStick.x < 0 || this.keys.a?.isDown;
+      this.left = this.scene.input.gamepad?.pad1?.leftStick.x < 0;
       // const prevWeapon = Phaser.Input.Keyboard.JustDown(this.keys.k) || this.scene.input.gamepad?.pad1?.B && !bPressed;
       // const nextWeapon = Phaser.Input.Keyboard.JustDown(this.keys.l) || this.scene.input.gamepad?.pad1?.X && !xPressed;
-      this.A_button = Phaser.Input.Keyboard.JustDown(this.keys.space) || this.scene.input.gamepad?.pad1?.A;
+      this.JumpButton = this.scene.input.gamepad?.pad1?.A;
+      this.AttackButton = this.scene.input.gamepad?.pad1?.B;
+      this.AttackTwoButton = this.scene.input.gamepad?.pad1?.X;
+      this.AttackThreeButton = this.scene.input.gamepad?.pad1?.Y;
       // const longFire = Phaser.Input.Keyboard.DownDuration(this.keys.space, duration) || this.scene.input.gamepad?.pad1?.A;
       // const shield = Phaser.Input.Keyboard.DownDuration(this.keys.z, 10000) || this.scene.input.gamepad?.pad1?.L2;
   }

@@ -5,6 +5,7 @@ import Player from './objects/player/Player';
 import Electricity from './objects/particles/Electricity';
 import Rain from './objects/particles/Rain';
 import Splash from './objects/particles/Splash';
+// import { inspectorScene } form '';
 export default class Game extends Scene {
   animatedTiles!: any;
   drone: any;

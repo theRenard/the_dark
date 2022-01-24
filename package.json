@@ -28,6 +28,8 @@
   },
   "dependencies": {
     "gsap": "^3.9.1",
-    "phaser": "^3.55.2"
+    "phaser": "^3.55.2",
+    "phaser-plugin-inspector": "^1.5.0",
+    "tweakpane": "^3.0.7"
   }
 }

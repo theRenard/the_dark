@@ -4,6 +4,8 @@ import Preloader from './Preloader';
 import Game from './Game';
 import CONSTS from './configs/constants.json';
 import './style.css'
+import { DefaultPluginsConfig } from 'phaser-plugin-inspector';
+
 type extraConfig = {
 	pixelArt: boolean
 }
@@ -33,6 +35,7 @@ const config: Phaser.Types.Core.GameConfig & extraConfig = {
 			},
 		}
 	},
+  plugins: DefaultPluginsConfig,
 	scene: [Preloader, Game],
 };
 
