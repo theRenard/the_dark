@@ -4,7 +4,7 @@ import Preloader from './Preloader';
 import Game from './Game';
 import CONSTS from './configs/constants.json';
 import './style.css'
-import { DefaultPluginsConfig } from 'phaser-plugin-inspector';
+import { InspectorGlobalPlugin, InspectorScenePlugin } from 'phaser-plugin-inspector';
 
 type extraConfig = {
 	pixelArt: boolean
@@ -29,13 +29,16 @@ const config: Phaser.Types.Core.GameConfig & extraConfig = {
 	physics: {
 		default: 'arcade',
 		arcade: {
-			debug,
+			debug: false,
 			gravity: {
 				y: 300
 			},
 		}
 	},
-  plugins: DefaultPluginsConfig,
+  plugins: {
+    // global: [{ key: 'InspectorGlobalPlugin', plugin: InspectorGlobalPlugin, mapping: 'inspectorGame' }],
+    // scene: [{ key: 'InspectorScenePlugin', plugin: InspectorScenePlugin, mapping: 'inspectorScene' }]
+  },
 	scene: [Preloader, Game],
 };
 

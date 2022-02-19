@@ -1,5 +1,13 @@
 import Game from "../../Game";
 import StateMachine from '../../plugins/StateMachine';
+import {
+  // AddAnimationState,
+  // AddArcadeBody,
+  AddGameObject,
+  // AddGroup,
+  // AddKeys,
+  // AddTimerEvent
+}  from 'phaser-plugin-inspector';
 
 // idle
 // transition to charge
@@ -22,6 +30,7 @@ import StateMachine from '../../plugins/StateMachine';
 
 export default class Player {
   private stateMachine: StateMachine
+  speed = 100;
   container: Phaser.GameObjects.Container;
   scene: Game;
   sprite: Phaser.GameObjects.Sprite;
@@ -33,13 +42,13 @@ export default class Player {
   AttackTwoButton!: boolean;
   AttackThreeButton!: boolean;
   physicsObject: Phaser.GameObjects.Rectangle;
+  // SpeedButton: Phaser.Math.Vector2;
   constructor(scene: Game, x: number, y: number) {
     this.scene = scene;
-		this.createAnimations();
 
     this.stateMachine = new StateMachine(this, 'player');
 
-    this.sprite = this.scene.add.sprite(32, -23, 'king');
+    this.sprite = this.scene.add.sprite(32, -23, 'king', 'king_idle');
 
     this.physicsObject = this.scene.add.rectangle(0, 0, 32, 32);
     this.scene.physics.add.existing(this.physicsObject);
@@ -74,7 +83,6 @@ export default class Player {
 		})
     .addState('attackThree', {
 			onEnter: this.attackThreeOnEnter,
-			onExit: this.attackThreeOnExit,
 		})
     .addState('fall', {
 			onEnter: this.fallOnEnter,
@@ -82,8 +90,12 @@ export default class Player {
 		})
     .setState('idle')
 
-    // this.scene.cameras.main.startFollow(this);
 
+    // this.scene.input.gamepad.on('down', (pad: any) => {});
+
+    // this.scene.cameras.main.startFollow(this);
+    // const { pane } = this.scene.inspectorScene;
+    // AddGameObject(this.sprite, pane, { title: 'Player' });
   }
 
   get physicsBody() {
@@ -101,7 +113,7 @@ export default class Player {
   }
 
 	private idleOnEnter() {
-    this.sprite.play({ key: 'idle', repeat: -1 }, true);
+    this.sprite.play({ key: 'king_idle', repeat: -1 }, true);
     this.physicsBody.setVelocityX(0);
 	}
 
@@ -114,18 +126,17 @@ export default class Player {
 	}
 
 	private walkOnEnter() {
-    this.sprite.play({ key: 'run', repeat: -1 }, true);
+    this.sprite.play({ key: 'king_run', repeat: -1 }, true);
 	}
 
 	private walkOnUpdate(){
-		const speed = 100
 
 		if (this.left) {
       this.faceLeft()
-			this.physicsBody.setVelocityX(-speed)
+			this.physicsBody.setVelocityX(-this.speed)
 		} else if (this.right) {
       this.faceRight()
-			this.physicsBody.setVelocityX(speed)
+			this.physicsBody.setVelocityX(this.speed)
 		} else {
 			this.physicsBody.setVelocityX(0)
 			this.stateMachine.setState('idle')
@@ -143,19 +154,18 @@ export default class Player {
 	}
 
 	private jumpOnEnter() {
-    this.sprite.play({ key: 'jump', repeat: -1 }, true);
+    this.sprite.play({ key: 'king_jump', repeat: -1 }, true);
 	}
 
 	private jumpOnUpdate() {
-    this.physicsBody.setVelocityY(-200)
-    const speed = 100
+    this.physicsBody.setVelocityY(-300)
 
 		if (this.left) {
       this.faceLeft();
-			this.physicsBody.setVelocityX(-speed)
+			this.physicsBody.setVelocityX(-this.speed)
 		} else if (this.right) {
       this.faceRight();
-			this.physicsBody.setVelocityX(speed)
+			this.physicsBody.setVelocityX(this.speed)
 		}
 
     if (!this.JumpButton) {
@@ -163,14 +173,14 @@ export default class Player {
 		}
 
     // don't jump too high
-    if (this.physicsBody.y < 200) {
+    if (this.physicsBody.y < 300) {
       this.stateMachine.setState('fall')
     }
 	}
 
   private attackOnEnter() {
     this.sprite.play({
-      key: 'attack',
+      key: 'king_attack_0',
       repeat: 0,
 
      }, true).on('animationcomplete', () => {
@@ -185,7 +195,7 @@ export default class Player {
 
   private attackTwoOnEnter() {
     this.sprite.play({
-      key: 'attack 1',
+      key: 'king_attack_1',
       repeat: 0,
 
      }, true).on('animationcomplete', () => {
@@ -199,7 +209,7 @@ export default class Player {
   }
   private attackThreeOnEnter() {
     this.sprite.play({
-      key: 'attack 3',
+      key: 'king_attack_3',
       repeat: 0,
 
      }, true).on('animationcomplete', () => {
@@ -207,12 +217,12 @@ export default class Player {
       })
   }
 
-  private attackThreeOnExit() {
-  }
+  // private attackThreeOnExit() {
+  // }
 
   private fallOnEnter() {
-    this.sprite.play({ key: 'fall', repeat: -1 }, true);
-    this.physicsBody.setVelocityY(200)
+    this.sprite.play({ key: 'king_fall', repeat: -1 }, true);
+    this.physicsBody.setVelocityY(100)
   }
 
   private fallOnUpdate() {
@@ -229,10 +239,6 @@ export default class Player {
 
   }
 
-  private createAnimations() {
-    this.scene.anims.createFromAseprite('king');
-  }
-
   private updateControls() {
       // const duration = 1000;
       // const up = this.cursors.up?.isDown || this.scene.input.gamepad?.pad1?.leftStick.y < 0 || this.keys.w?.isDown;
@@ -241,10 +247,12 @@ export default class Player {
       this.left = this.scene.input.gamepad?.pad1?.leftStick.x < 0;
       // const prevWeapon = Phaser.Input.Keyboard.JustDown(this.keys.k) || this.scene.input.gamepad?.pad1?.B && !bPressed;
       // const nextWeapon = Phaser.Input.Keyboard.JustDown(this.keys.l) || this.scene.input.gamepad?.pad1?.X && !xPressed;
-      this.JumpButton = this.scene.input.gamepad?.pad1?.A;
-      this.AttackButton = this.scene.input.gamepad?.pad1?.B;
-      this.AttackTwoButton = this.scene.input.gamepad?.pad1?.X;
-      this.AttackThreeButton = this.scene.input.gamepad?.pad1?.Y;
+      this.JumpButton = this.scene.input.gamepad.pad1?.A;
+      this.AttackButton = this.scene.input.gamepad.pad1?.B;
+      this.AttackTwoButton = this.scene.input.gamepad.pad1?.X;
+      this.AttackThreeButton = this.scene.input.gamepad.pad1?.Y;
+      if (this.scene.input.gamepad.pad1?.R1) this.speed = 200;
+      else this.speed = 100;
       // const longFire = Phaser.Input.Keyboard.DownDuration(this.keys.space, duration) || this.scene.input.gamepad?.pad1?.A;
       // const shield = Phaser.Input.Keyboard.DownDuration(this.keys.z, 10000) || this.scene.input.gamepad?.pad1?.L2;
   }

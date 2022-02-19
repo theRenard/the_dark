@@ -378,24 +378,18 @@
  },
  "meta": {
   "app": "https://www.aseprite.org/",
-  "version": "1.2.30",
+  "version": "1.2.32-x64",
   "image": "bomb_droid.png",
   "format": "RGBA8888",
   "size": { "w": 467, "h": 198 },
   "scale": "1",
   "frameTags": [
-   { "name": "Idle", "from": 1, "to": 6, "direction": "forward" },
-   { "name": "Move", "from": 7, "to": 14, "direction": "forward" },
-   { "name": "Bomb", "from": 15, "to": 30, "direction": "forward" },
-   { "name": "transition down", "from": 31, "to": 33, "direction": "forward" },
-   { "name": "hit", "from": 34, "to": 35, "direction": "forward" },
-   { "name": "death", "from": 36, "to": 46, "direction": "forward" }
-  ],
-  "layers": [
-   { "name": "VFX", "opacity": 255, "blendMode": "normal" },
-   { "name": "Bot", "opacity": 255, "blendMode": "normal" }
-  ],
-  "slices": [
+   { "name": "drone_Idle", "from": 1, "to": 6, "direction": "forward" },
+   { "name": "drone_Move", "from": 7, "to": 14, "direction": "forward" },
+   { "name": "drone_Bomb", "from": 15, "to": 30, "direction": "forward" },
+   { "name": "drone_transition_down", "from": 31, "to": 33, "direction": "forward" },
+   { "name": "drone_hit", "from": 34, "to": 35, "direction": "forward" },
+   { "name": "drone_death", "from": 36, "to": 46, "direction": "forward" }
   ]
  }
 }

@@ -4,24 +4,25 @@ import gsap from "gsap";
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
   constructor(scene: Game) {
+    scene.anims.createFromAseprite('bomb_droid');
     const x = Phaser.Math.Between(0, scene.scale.width);
     const y = Phaser.Math.Between(0, scene.scale.height - 150);
-    super(scene, x, y, 'bomb_droid_.bomb_droid');
+    super(scene, x, y, 'bomb_droid');
     this.scene = scene;
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.body.allowGravity = false;
-    this.play({ key: 'Idle', repeat: -1 });
+    this.play({ key: 'drone_Idle', repeat: -1 });
     this.randomnlyMove();
     this.setBodySize(35, 35);
   }
 
   private move() {
-    this.play({ key: 'Move', repeat: -1 });
+    this.play({ key: 'drone_Move', repeat: -1 });
   }
 
   private idle() {
-    this.play({ key: 'Idle', repeat: -1 });
+    this.play({ key: 'drone_Idle', repeat: -1 });
   }
 
   private randomnlyMove() {

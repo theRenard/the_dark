@@ -1,6 +1,7 @@
 import { Scene } from 'phaser';
 import AnimatedTiles from './plugins/AnimatedTiles';
 import Drone from './objects/enemies/Drone';
+import Guardian from './objects/enemies/Guardian';
 import Player from './objects/player/Player';
 import Electricity from './objects/particles/Electricity';
 import Rain from './objects/particles/Rain';
@@ -14,6 +15,8 @@ export default class Game extends Scene {
   nearBuildings!: Phaser.GameObjects.Image;
   middleBuildings!: Phaser.GameObjects.Image;
   farBuildings!: Phaser.GameObjects.Image;
+  inspectorScene!: { pane: any; };
+  guardian!: Guardian;
   constructor() {
     super({
       key: 'game',
@@ -65,10 +68,13 @@ export default class Game extends Scene {
       }
     });
 
+    // this.guardian = new Guardian(this, 100, 300);
+
     const drone = new Drone(this);
     new Drone(this);
-    this.physics.world.collide(this.player.container, terrain);
+    // this.physics.world.collide(this.player.container, terrain);
     this.physics.add.collider(this.player.container, terrain);
+    // this.physics.add.collider(this.guardian.container, terrain);
     this.physics.add.collider(drone, terrain);
 
     this.animatedTiles.init(map);
@@ -79,7 +85,7 @@ export default class Game extends Scene {
     // making the camera follow the player
     // this.myCam.startFollow(this.player);
 
-    // this.add.dynamicBitmapText(this.scale.width / 2, this.scale.height / 2, 'vermin', 'The_Dark', 60 ).setOrigin(0.5);
+    this.add.dynamicBitmapText(this.scale.width / 2, this.scale.height / 2, 'vermin', 'The_Dark', 60 ).setOrigin(0.5);
 
 
   }

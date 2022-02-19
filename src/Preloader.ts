@@ -26,12 +26,12 @@ export default class Preload extends Scene {
 
     // Aseprites
     this.load.aseprite('bomb_droid', 'assets/images/characters/bomb_droid/bomb_droid.png', 'assets/images/characters/bomb_droid/bomb_droid.json');
-    // this.load.aseprite('assassin', 'assets/images/characters/assassin/assassin.png', 'assets/images/characters/assassin/assassin.json');
-    // this.load.aseprite('blaster', 'assets/images/characters/blaster/blaster.png', 'assets/images/characters/blaster/blaster.json');
-    // this.load.aseprite('dagger', 'assets/images/characters/dagger/dagger.png', 'assets/images/characters/dagger/dagger.json');
-    // this.load.aseprite('guardian', 'assets/images/characters/guardian/guardian.png', 'assets/images/characters/guardian/guardian.json');
+    this.load.aseprite('assassin', 'assets/images/characters/assassin/assassin.png', 'assets/images/characters/assassin/assassin.json');
+    this.load.aseprite('blaster', 'assets/images/characters/blaster/blaster.png', 'assets/images/characters/blaster/blaster.json');
+    this.load.aseprite('dagger', 'assets/images/characters/dagger/dagger.png', 'assets/images/characters/dagger/dagger.json');
+    this.load.aseprite('guardian', 'assets/images/characters/guardian/guardian.png', 'assets/images/characters/guardian/guardian.json');
     this.load.aseprite('king', 'assets/images/characters/king/king.png', 'assets/images/characters/king/king.json');
-    // this.load.aseprite('slicer', 'assets/images/characters/slicer/slicer.png', 'assets/images/characters/slicer/slicer.json');
+    this.load.aseprite('slicer', 'assets/images/characters/slicer/slicer.png', 'assets/images/characters/slicer/slicer.json');
 
     // create the buildings
     const { near, middle, far } = new Buildings(this).textures;
@@ -42,12 +42,12 @@ export default class Preload extends Scene {
 
   create() {
 
-    this.anims.createFromAseprite('bomb_droid');
     // this.anims.createFromAseprite('assassin');
     // this.anims.createFromAseprite('blaster');
     // this.anims.createFromAseprite('dagger');
-    // this.anims.createFromAseprite('guardian');
     // this.anims.createFromAseprite('slicer');
+    this.anims.createFromAseprite('king');
+
 
     const handler = () => this.scene.start('game');
     setTimeout(handler, 100);
